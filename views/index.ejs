@@ -1,0 +1,103 @@
+<html>
+
+<head>
+    <title>
+        Send Files
+    </title>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script src="js/binary.min.js"></script>
+    <script>
+    //    var serverIp = 'ws://localhost:9000'
+    //   var serverIp = 'ws://192.168.43.164:9000'
+    var serverIp = 'ws://' + document.location.host;
+    var client = new BinaryClient(serverIp);
+
+    // Wait for connection to BinaryJS server
+    client.on('open', function() {
+        var box = $('#box');
+        box.on('dragenter', doNothing);
+        box.on('dragover', doNothing);
+        box.text('Drag files here');
+        box.on('drop', function(e) {
+
+            e.originalEvent.preventDefault();
+            var file = e.originalEvent.dataTransfer.files[0];
+
+            sendFile(file);
+        });
+    });
+
+    $(document).ready(function() {
+        $('#fileinput').change(function() {
+            var file = this.files[0];
+            sendFile(file);
+        });
+    });
+
+    function sendFile(file) {
+        // Add to list of uploaded files
+        $('<li></li>').append($('<a></a>').text(file.name).prop('href', '/uploads/' + file.name)).appendTo('#uploadedFiles');
+
+        // `client.send` is a helper function that creates a stream with the 
+        // given metadata, and then chunks up and streams the data.
+        var stream = client.send(file, {
+            name: file.name,
+            size: file.size
+        }); 
+
+        // Print progress
+        var tx = 0;
+        stream.on('data', function(data) {
+            var perc = Math.round(tx += data.rx * 100);
+            $('#progress').text(perc + '% complete');
+            $('#progressbar div').css('width', perc + '%');
+        });
+    }
+
+    // Deal with DOM quirks
+    function doNothing(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    </script>
+    <style>
+    #progressbar {
+        margin: 1em 0px;
+        width: 100%;
+        height: 20px;
+        background: cyan;
+    }
+    
+    #progressbar div {
+        width: 0%;
+        height: 100%;
+        background-color: #174E7A;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="progress" align="center">0% complete</div>
+    <div id="progressbar">
+        <div>
+        </div>
+    </div>
+    <div id="box" style="background: #eee; font-size: 26px; width: 400px; height: 300px;line-height: 300px; margin: 0 auto; text-align: center;">
+        Connecting...
+    </div>
+    <input type="file" id="fileinput" capture="camera" />
+    <div>
+        <h2>Uploaded files</h2>
+        <ul id="uploadedFiles">
+            <% files.forEach(function(file){ %>
+                <li>
+                    <a href="uploads/<%=file%>">
+                        <%=file%>
+                    </a>
+                </li>
+                <% }); %>
+        </ul>
+    </div>
+</body>
+
+</html>

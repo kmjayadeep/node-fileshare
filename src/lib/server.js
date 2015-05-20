@@ -5,7 +5,10 @@ var express = require('express');
 var path = require('path');
 var app = express();
 app.set('view engine', 'ejs');
+app.set('views',__dirname+'/views/');
 app.use(express.static(__dirname+'/public/'));
+
+var PORT = process.env.PORT || 3000;
 
 var folder;
 if (process.argv[2])
@@ -82,6 +85,7 @@ app.get('/', function(req, res) {
     });
 });
 
-server.listen(9000,function(){
-    console.log('listening to port 9000')
+server.listen(PORT,function(){
+    console.log('Listening to port '+PORT);
+    console.log('Enter "ifconfig" or "ip addr" from terminal to find your ip address');
 });

@@ -1,12 +1,12 @@
 {
-  "author": "Eric Zhang (http://ericzhang.com)",
-  "name": "binaryjs",
-  "description": "Binary realtime streaming made easy",
-  "version": "0.2.1",
-  "homepage": "http://binaryjs.com",
+  "author": "Jayadeep KM",
+  "name": "Wshare",
+  "description": "A simple tool to share files to your computer via ethernet/wlan",
+  "version": "0.0.1",
+  "homepage": "",
   "repository": {
     "type": "git",
-    "url": "git://github.com/binaryjs/binaryjs.git"
+    "url": "git://github.com/kmjayadeep/wshare.git"
   },
   "main": "lib/server.js",
   "scripts": {
@@ -16,11 +16,12 @@
     "node": ">=0.10.20"
   },
   "dependencies": {
-    "streamws": ">=0.1.1",
+    "binaryjs": "^0.2.1",
     "binarypack": ">=0.0.4",
+    "ejs": "~0.7.1",
+    "express": "~4.12.1",
     "streamers": ">=0.1.0",
-    "express": "~2.5.8",
-    "ejs": "~0.7.1"
+    "streamws": ">=0.1.1"
   },
   "devDependencies": {
     "mocha": "~1.3.0",

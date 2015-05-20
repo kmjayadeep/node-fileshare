@@ -4,15 +4,23 @@ var http = require('http');
 var express = require('express');
 var path = require('path');
 var app = express();
+var program = require('commander');
 app.set('view engine', 'ejs');
 app.set('views',__dirname+'/views/');
 app.use(express.static(__dirname+'/public/'));
 
-var PORT = process.env.PORT || 3000;
+program
+    .version('0.0.1')
+    .option('-d, --dir <directory>',"Directory to Serve")
+    .option('-p, --port <number>',"Port",parseInt)
+    .parse(process.argv)
+
+var PORT = program.port || process.env.PORT || 3000;
+
 
 var folder;
-if (process.argv[2])
-    folder = path.join(process.cwd(),process.argv[2]);
+if (program.dir)
+    folder = program.dir
 else
     folder = path.join(process.env.HOME, '/Downloads/Wshare');
 
@@ -39,7 +47,7 @@ fs.readdir(folder, function(err, files) {
                 }
             });
         } else {
-            console.log('Unknown error')
+            console.log('Unable to access spcecified directory')
         }
     } else {
         console.log('Serving on : ' + folder);
@@ -85,7 +93,11 @@ app.get('/', function(req, res) {
     });
 });
 
-server.listen(PORT,function(){
+server.listen(PORT,function(err){
     console.log('Listening to port '+PORT);
     console.log('Enter "ifconfig" or "ip addr" from terminal to find your ip address');
+});
+
+process.on('uncaughtException',function(err){
+    console.log(err);
 });

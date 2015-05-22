@@ -99,5 +99,9 @@ server.listen(PORT,function(err){
 });
 
 process.on('uncaughtException',function(err){
-    console.log(err);
+    if(err.syscall=='listen'){
+        console.log('Unable to start Server: Please try changing the port or run with superuser privilages')
+    }else{
+        console.log("Unknown Error")
+    }
 });

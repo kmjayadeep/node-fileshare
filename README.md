@@ -14,14 +14,14 @@ Usage
 To start a server on HOME/Downloads/Wshare
 
 ```console
-$ wshare
+$ wshare [options]
 ```
+  Options:
 
-To Start a server on a relative directory
-
-```console
-$ wshare path_to_folder
-```
+    -h, --help             output usage information
+    -V, --version          output the version number
+    -d, --dir <directory>  Directory to Serve
+    -p, --port <number>    Port
 
 The server will be started if the given directory has write permissions
 

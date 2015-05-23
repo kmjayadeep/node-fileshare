@@ -1,35 +1,35 @@
 {
-  "author": "Jayadeep KM",
-  "name": "Wshare",
-  "description": "A simple tool to share files to your computer via ethernet/wlan",
-  "version": "0.0.2",
-  "homepage": "",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/kmjayadeep/wshare.git"
-  },
-  "main": "./lib/server",
-  "engines": {
-    "node": ">=0.10.20"
-  },
-  "keywords": [
-    "wifi",
-    "fileshare",
-    "sharing",
-    "file share",
-    "lan",
-    "wshare"
-  ],
-  "bin": {
-    "wshare": "./bin/wshare"
-  },
-  "dependencies": {
-    "binaryjs": "^0.2.1",
-    "binarypack": ">=0.0.4",
-    "commander": "^2.8.1",
-    "ejs": "~0.7.1",
-    "express": "~4.12.1",
-    "streamers": ">=0.1.0",
-    "streamws": ">=0.1.1"
-  }
+    "author": "Jayadeep KM",
+    "name": "wshare",
+    "description": "A simple tool to share files to your computer via ethernet/wlan",
+    "version": "0.0.2",
+    "homepage": "",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/kmjayadeep/wshare.git"
+    },
+    "main": "./lib/server",
+    "engines": {
+        "node": ">=0.10.20"
+    },
+    "keywords": [
+        "wifi",
+        "fileshare",
+        "sharing",
+        "file share",
+        "lan",
+        "wshare"
+    ],
+    "bin": {
+        "wshare": "./bin/wshare"
+    },
+    "dependencies": {
+        "binaryjs": "^0.2.1",
+        "binarypack": ">=0.0.4",
+        "commander": "^2.8.1",
+        "ejs": "~0.7.1",
+        "express": "~4.12.1",
+        "streamers": ">=0.1.0",
+        "streamws": ">=0.1.1"
+    }
 }

@@ -6,13 +6,13 @@ var path = require('path');
 var app = express();
 var program = require('commander');
 app.set('view engine', 'ejs');
-app.set('views',__dirname+'/views/');
-app.use(express.static(__dirname+'/public/'));
+app.set('views', __dirname + '/views/');
+app.use(express.static(__dirname + '/public/'));
 
 program
     .version('0.0.1')
-    .option('-d, --dir <directory>',"Directory to Serve")
-    .option('-p, --port <number>',"Port",parseInt)
+    .option('-d, --dir <directory>', "Directory to Serve")
+    .option('-p, --port <number>', "Port", parseInt)
     .parse(process.argv)
 
 var PORT = program.port || process.env.PORT || 3000;
@@ -93,15 +93,15 @@ app.get('/', function(req, res) {
     });
 });
 
-server.listen(PORT,function(err){
-    console.log('Listening to port '+PORT);
+server.listen(PORT, function(err) {
+    console.log('Listening to port ' + PORT);
     console.log('Enter "ifconfig" or "ip addr" from terminal to find your ip address');
 });
 
-process.on('uncaughtException',function(err){
-    if(err.syscall=='listen'){
+process.on('uncaughtException', function(err) {
+    if (err.syscall == 'listen') {
         console.log('Unable to start Server: Please try changing the port or run with superuser privilages')
-    }else{
+    } else {
         console.log("Unknown Error")
     }
 });

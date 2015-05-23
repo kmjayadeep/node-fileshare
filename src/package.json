@@ -2,7 +2,7 @@
   "author": "Jayadeep KM",
   "name": "Wshare",
   "description": "A simple tool to share files to your computer via ethernet/wlan",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "",
   "repository": {
     "type": "git",
@@ -17,7 +17,8 @@
     "fileshare",
     "sharing",
     "file share",
-    "lan"
+    "lan",
+    "wshare"
   ],
   "bin": {
     "wshare": "./bin/wshare"

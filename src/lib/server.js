@@ -22,7 +22,7 @@ var folder;
 if (program.dir)
     folder = program.dir
 else
-    folder = path.join(process.env.HOME, '/Downloads/Wshare');
+    folder = path.join(process.env.HOME, '/Wshare');
 
 var server = http.createServer(app);
 

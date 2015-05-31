@@ -11,7 +11,7 @@ $ npm install -g wshare
 Usage
 ---------
 
-To start a server on HOME/Downloads/Wshare
+To start a server on HOME/Wshare
 
 ```console
 $ wshare [options]

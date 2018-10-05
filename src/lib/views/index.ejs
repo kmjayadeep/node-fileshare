@@ -1,103 +1,355 @@
+<%
+var image_extension_name = [
+"png",
+"jpg",
+"jpeg",
+"gif",
+"webp",
+"svg",
+"tiff",
+"tif",
+"ai",
+"bmp",
+"ico",
+"ps",
+"psd"
+];
+var archive_extension_name = [
+"zip",
+"rar",
+"tar",
+"gz",
+"pkg",
+"deb",
+"7z",
+"z",
+"arj"
+];
+var audio_extension_name = [
+"wav",
+"mp3",
+"ogg",
+"mpa",
+"wma",
+"mid",
+"midi",
+"aif",
+"cda",
+"wpl"
+];
+var video_extension_name = [
+"3g2",
+"3gp",
+"avi",
+"flv",
+"h264",
+"m4v",
+"mkv",
+"mp4",
+"mov",
+"mpg",
+"mpeg",
+"rm",
+"swf",
+"vob",
+"wmv"
+];
+var code_extension_name = [
+"c",
+"class",
+"cpp",
+"cs",
+"h",
+"java",
+"sh",
+"swift",
+"vb",
+"vba",
+"asp",
+"aspx",
+"html",
+"htm",
+"jsp",
+"cgi",
+"pl",
+"js",
+"css",
+"php",
+"py",
+"xhtml"
+];
+var powerpoint_extension_name = ["ppt", "pptx", "pps"];
+var excel_extension_name = ["xls", "xlsx"];
+var word_extension_name = ["doc", "docx", "odt"];
+
+function detect_class_type(filename) {
+    var ext = filename.split(".").pop().toLowerCase();
+    if (image_extension_name.includes(ext)) {
+        return "file image outline icon";
+    } else if (archive_extension_name.includes(ext)) {
+        return "file archive outline icon";
+    } else if (audio_extension_name.includes(ext)) {
+        return "file audio outline icon";
+    } else if (video_extension_name.includes(ext)) {
+        return "file video outline";
+    } else if (code_extension_name.includes(ext)) {
+        return "file code outline";
+    } else if (powerpoint_extension_name.includes(ext)) {
+        return "file powerpoint outline";
+    } else if (excel_extension_name.includes(ext)) {
+        return "file excel outline";
+    } else if (word_extension_name.includes(ext)) {
+        return "file word outline";
+    } else if (ext == "pdf") {
+        return "file pdf outline";
+    } else {
+        return "file outline";
+    }
+}
+%>
 <html>
+    <head>
+        <title>
+            Send Files
+        </title>
+        <link rel="stylesheet" href="css/tocas.css">
+        <script type="text/javascript" src="js/tocas.js"></script>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script src="js/binary.min.js"></script>
+        <script>
+            //    var serverIp = 'ws://localhost:9000'
+            //   var serverIp = 'ws://192.168.43.164:9000'
+            var serverIp = 'ws://' + document.location.host;
+            var client = new BinaryClient(serverIp);
 
-<head>
-    <title>
-        Send Files
-    </title>
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script src="js/binary.min.js"></script>
-    <script>
-    //    var serverIp = 'ws://localhost:9000'
-    //   var serverIp = 'ws://192.168.43.164:9000'
-    var serverIp = 'ws://' + document.location.host;
-    var client = new BinaryClient(serverIp);
+            // Wait for connection to BinaryJS server
+            client.on('open', function() {
+                var box = $('#uploader');
+                box.on('dragover', function(e){
+                    e.originalEvent.preventDefault();
+                    $('#uploader span[class=description]').text("Drop Here!");
+                    $('#uploader span[class=description]').css('color', '#0077ff');
+                });
+                box.on('dragend dragleave', function(e){
+                    e.originalEvent.preventDefault();
+                    $('#uploader span[class=description]').text("Drag to here.");
+                    $('#uploader span[class=description]').css('color', 'inherit');
+                });
+                box.on('drop', function(e) {
 
-    // Wait for connection to BinaryJS server
-    client.on('open', function() {
-        var box = $('#box');
-        box.on('dragenter', doNothing);
-        box.on('dragover', doNothing);
-        box.text('Drag files here');
-        box.on('drop', function(e) {
+                    e.originalEvent.preventDefault();
+                    var file = e.originalEvent.dataTransfer.files[0];
 
-            e.originalEvent.preventDefault();
-            var file = e.originalEvent.dataTransfer.files[0];
+                    sendFile(file);
+                });
+            });
 
-            sendFile(file);
-        });
-    });
+            $(document).ready(function() {
+                $('#filepicker').click(function() {
+                    $('#fileinput').click();
+                });
+                $('#fileinput').change(function() {
+                    var file = this.files[0];
+                    sendFile(file);
+                });
+            });
+            var image_extension_name = [
+              "png",
+              "jpg",
+              "jpeg",
+              "gif",
+              "webp",
+              "svg",
+              "tiff",
+              "tif",
+              "ai",
+              "bmp",
+              "ico",
+              "ps",
+              "psd"
+            ];
+            var archive_extension_name = [
+              "zip",
+              "rar",
+              "tar",
+              "gz",
+              "pkg",
+              "deb",
+              "7z",
+              "z",
+              "arj"
+            ];
+            var audio_extension_name = [
+              "wav",
+              "mp3",
+              "ogg",
+              "mpa",
+              "wma",
+              "mid",
+              "midi",
+              "aif",
+              "cda",
+              "wpl"
+            ];
+            var video_extension_name = [
+              "3g2",
+              "3gp",
+              "avi",
+              "flv",
+              "h264",
+              "m4v",
+              "mkv",
+              "mp4",
+              "mov",
+              "mpg",
+              "mpeg",
+              "rm",
+              "swf",
+              "vob",
+              "wmv"
+            ];
+            var code_extension_name = [
+              "c",
+              "class",
+              "cpp",
+              "cs",
+              "h",
+              "java",
+              "sh",
+              "swift",
+              "vb",
+              "vba",
+              "asp",
+              "aspx",
+              "html",
+              "htm",
+              "jsp",
+              "cgi",
+              "pl",
+              "js",
+              "css",
+              "php",
+              "py",
+              "xhtml"
+            ];
+            var powerpoint_extension_name = ["ppt", "pptx", "pps"];
+            var excel_extension_name = ["xls", "xlsx"];
+            var word_extension_name = ["doc", "docx", "odt"];
+            
+            function detect_class_type(filename) {
+              var ext = filename.split(".").pop().toLowerCase();
+              if (image_extension_name.includes(ext)) {
+                return "file image outline icon";
+              } else if (archive_extension_name.includes(ext)) {
+                return "file archive outline icon";
+              } else if (audio_extension_name.includes(ext)) {
+                return "file audio outline icon";
+              } else if (video_extension_name.includes(ext)) {
+                return "file video outline";
+              } else if (code_extension_name.includes(ext)) {
+                return "file code outline";
+              } else if (powerpoint_extension_name.includes(ext)) {
+                return "file powerpoint outline";
+              } else if (excel_extension_name.includes(ext)) {
+                return "file excel outline";
+              } else if (word_extension_name.includes(ext)) {
+                return "file word outline";
+              } else if (ext == "pdf") {
+                return "file pdf outline";
+              } else {
+                return "file outline";
+              }
+            }
+            function sendFile(file) {
+                // Add to list of uploaded files
+                
+                $('#fileuploaded').append(`<a href="${file.name}" class="item">
+                    <i class="${detect_class_type(file.name)} icon"></i>
+                        ${file.name}
+                    </a>`);
 
-    $(document).ready(function() {
-        $('#fileinput').change(function() {
-            var file = this.files[0];
-            sendFile(file);
-        });
-    });
+                // `client.send` is a helper function that creates a stream with the 
+                // given metadata, and then chunks up and streams the data.
+                var stream = client.send(file, {
+                    name: file.name,
+                    size: file.size
+                });
 
-    function sendFile(file) {
-        // Add to list of uploaded files
-        $('<li></li>').append($('<a></a>').text(file.name).prop('href', '/uploads/' + file.name)).appendTo('#uploadedFiles');
+                // Print progress
+                $('#progress').removeClass('preparing').addClass('active');
+                var tx = 0;
+                stream.on('data', function(data) {
+                    var perc = Math.round(tx += data.rx * 10000)/100;
+                    $('#progressbar span').text(perc + '%');
+                    $('#progressbar').css('width', 'calc( 0.8 * ' + perc + '% + 20% )');
+                    if(perc == 100) {
+                        setTimeout(function(){
+                            $('#progress').removeClass('active').addClass('preparing');
+                            $('#progressbar span').text('');
+                        }, 1000);
+                    }
+                });
+            }
+        </script>
+        <style>
+            body {
+                padding-top: 4em;
+                background-color: rgb(250, 250, 250);
+                overflow: hidden;
+            }
+            
+            .ts.segmented.list {
+                height: 100vh;
+            }
+        </style>
+    </head>
 
-        // `client.send` is a helper function that creates a stream with the 
-        // given metadata, and then chunks up and streams the data.
-        var stream = client.send(file, {
-            name: file.name,
-            size: file.size
-        }); 
+    <body>
+        <div class="ts narrow container">
+            <div class="ts huge header">
+                <div class="content">
+                    Wshare
+                    <div class="ts inline huge sub header">- simple file sharing application built in node</div>
+                </div>
+            </div>
 
-        // Print progress
-        var tx = 0;
-        stream.on('data', function(data) {
-            var perc = Math.round(tx += data.rx * 100);
-            $('#progress').text(perc + '% complete');
-            $('#progressbar div').css('width', perc + '%');
-        });
-    }
+            <br>
 
-    // Deal with DOM quirks
-    function doNothing(e) {
-        e.preventDefault();
-        e.stopPropagation();
-    }
-    </script>
-    <style>
-    #progressbar {
-        margin: 1em 0px;
-        width: 100%;
-        height: 20px;
-        background: cyan;
-    }
-    
-    #progressbar div {
-        width: 0%;
-        height: 100%;
-        background-color: #174E7A;
-    }
-    </style>
-</head>
+            <div class="ts grid">
+                <div class="eleven wide column">
+                    <div class="ts selection segmented list" id="fileuploaded">
+                        <% files.forEach(function(file) { %>
+                        <a href="<%= file %>" class="item">
+                            <i class="<%= detect_class_type(file) %> icon"></i>
+                            <%= file %>
+                        </a>
+                        <% }) %>
+                    </div>
+                </div>
 
-<body>
-    <div id="progress" align="center">0% complete</div>
-    <div id="progressbar">
-        <div>
+                <div class="five wide column">
+                    <div class="ts card">
+                        <div id="uploader" class="ts basic padded dashed slate">
+                            <i class="upload symbol icon"></i>
+                            <span class="header">Upload</span>
+                            <span class="description">Drag to here.</span>
+                        </div>
+                        <div class="extra content">
+                            <div id="progress" class="ts preparing progress">
+                                <div id="progressbar" class="bar">
+                                    <span class="text"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="extra content">
+                            <button id="filepicker" class="ts fluid labeled icon button">
+                                <i class="upload icon"></i> Choose File
+                            </button>
+                            <input id="fileinput" type="file" style="display:none;">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <div id="box" style="background: #eee; font-size: 26px; width: 400px; height: 300px;line-height: 300px; margin: 0 auto; text-align: center;">
-        Connecting...
-    </div>
-    <input type="file" id="fileinput" capture="camera" />
-    <div>
-        <h2>Uploaded files</h2>
-        <ul id="uploadedFiles">
-            <% files.forEach(function(file){ %>
-                <li>
-                    <a href="<%=file%>">
-                        <%=file%>
-                    </a>
-                </li>
-                <% }); %>
-        </ul>
-    </div>
-</body>
-
+    </body>
 </html>

@@ -27,3 +27,7 @@ The server will be started if the given directory has write permissions
 
 Just go to : http://your_ip:PORT 
 to share files anywhere from the network
+
+Screenshot
+---------
+![alt text](https://raw.githubusercontent.com/joseprb/wshare/master/src/assets/images/ss-1.png)
